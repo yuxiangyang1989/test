@@ -3,9 +3,9 @@ package com.bigdata.qqhb.model;
 import com.bigdata.apiout.BaseModel;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author yang
@@ -16,8 +16,16 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-public class Suggestion extends BaseModel implements Serializable{
+public class Suggestion implements Serializable{
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="update_time")
+    private Date updateTime;
+    @Column(name="create_time")
+    private Date createTime;
+
     private String 	userCode;//用户ID--手机IMEI唯一标识号
     private String msgType;//类型
     private String msg;//问题描述

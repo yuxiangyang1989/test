@@ -3,8 +3,7 @@ package com.bigdata.qqhb.model;
 import com.bigdata.apiout.BaseModel;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -17,9 +16,14 @@ import java.util.Date;
  */
 @Data
 @Entity
-public class AppVersion extends BaseModel implements Serializable {
+public class AppVersion implements Serializable {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="update_time")
+    private Date updateTime;
+    @Column(name="create_time")
+    private Date createTime;
     private String appName;
     private String appDesc;
     private String fileName;

@@ -3,9 +3,7 @@ package com.bigdata.qqhb.model;
 import com.bigdata.apiout.BaseModel;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -18,11 +16,18 @@ import java.util.Date;
  */
 @Data
 @Entity
-public class Openvip extends BaseModel implements Serializable{
+public class Openvip implements Serializable{
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="update_time")
+    private Date updateTime;
+    @Column(name="create_time")
+    private Date createTime;
+
     @Column(name="USER_ID")
     private String userCode;//用户ID--手机IMEI唯一标识号
-    private Date adddate;//开通时间
     private String svip;//SVIP功能
     private String shenmi;//神秘功能箱
     private String niuniu;//牛牛

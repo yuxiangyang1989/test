@@ -3,10 +3,9 @@ package com.bigdata.qqhb.model;
 import com.bigdata.apiout.BaseModel;
 import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @author yang
@@ -17,9 +16,15 @@ import java.io.Serializable;
  */
 @Data
 @Entity
-public class Account extends BaseModel implements Serializable {
+public class Account implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @Column(name="update_time")
+    private Date updateTime;
+    @Column(name="create_time")
+    private Date createTime;
     @Column(name = "USER_ID")
     private String userCode;//用户ID--手机IMEI唯一标识号
     @Column(name = "USER_PHONE")

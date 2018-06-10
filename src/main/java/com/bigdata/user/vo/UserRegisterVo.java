@@ -1,12 +1,10 @@
 package com.bigdata.user.vo;
 
 import com.bigdata.apiout.BaseVo;
-import com.bigdata.enums.UserInfoTypeEnum;
+import com.bigdata.enums.user.UserInfoTypeEnum;
 import com.bigdata.framework.common.utils.MD5Utils;
 import com.bigdata.framework.common.utils.NumberUtils;
-import com.bigdata.framework.common.utils.StringUtils;
 import com.bigdata.user.model.UserInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;

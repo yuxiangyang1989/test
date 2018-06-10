@@ -1,9 +1,14 @@
 package com.bigdata.framework.web.util;
 
+import com.bigdata.exception.SZBException;
 import com.bigdata.framework.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author yang
@@ -44,4 +49,19 @@ public class HostUtils extends com.bigdata.framework.common.utils.HostUtils {
 
         return ip;
     }
+
+    public static String getContent(Map<String, String> params, String content) {
+        String reg = "\\{\\w*}";//
+        Pattern pattern = Pattern.compile(reg);
+        Matcher matcher = pattern.matcher(content);
+        while (matcher.find()) {
+            String group = matcher.group();//
+            String key = group.substring(1, group.length() - 1);
+            if (!params.containsKey(key))
+                throw new SZBException("未找到需要替换的key：" + key);
+            content = content.replace(group, params.get(key));
+        }
+        return content;
+    }
+
 }

@@ -5,7 +5,7 @@ import javax.ws.rs.core.MediaType;
 /**
  * @author yang
  * @ClassName: Constants
- * @Description:
+ * @Description:常量配置类
  * @date 2018-06-05
  * @version:
  */

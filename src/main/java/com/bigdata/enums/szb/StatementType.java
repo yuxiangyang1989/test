@@ -1,7 +1,9 @@
-package com.bigdata.enums;
+package com.bigdata.enums.szb;
 
 import lombok.Data;
 import lombok.Getter;
+
+import java.util.Objects;
 
 /**
  * @author yang
@@ -22,5 +24,15 @@ public enum StatementType {
     }
     private final int code;
     private final String desc;
+
+    //获取枚举实例
+    public static StatementType fromValue(Integer value) {
+        for (StatementType statusEnum : StatementType.values()) {
+            if (Objects.equals(value, statusEnum.getCode())) {
+                return statusEnum;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
 
 }

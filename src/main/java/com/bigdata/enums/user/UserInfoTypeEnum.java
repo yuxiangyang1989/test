@@ -1,4 +1,6 @@
-package com.bigdata.enums;
+package com.bigdata.enums.user;
+
+import lombok.Getter;
 
 /**
  * @author yang
@@ -7,6 +9,7 @@ package com.bigdata.enums;
  * @date 2018-05-30
  * @version:
  */
+@Getter
 public enum UserInfoTypeEnum {
     NORMAL(1,"账户正常"),
     FREEZE(2,"账户冻结"),

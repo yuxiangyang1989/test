@@ -1,5 +1,7 @@
 package com.bigdata.enums;
 
+import lombok.Getter;
+
 /**
  * @author yang
  * @enumName: ResponseCodeType

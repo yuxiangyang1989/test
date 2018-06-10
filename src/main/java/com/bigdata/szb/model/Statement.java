@@ -1,11 +1,10 @@
 package com.bigdata.szb.model;
 
-import com.bigdata.apiout.BaseModel;
-import com.bigdata.enums.StatementType;
+import com.bigdata.enums.szb.StatementType;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author yang
@@ -16,11 +15,17 @@ import javax.persistence.Id;
  */
 @Data
 @Entity
-public class Statement extends BaseModel {
+@Table(name = "statement")
+public class Statement{
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String userCode;
+    @Column(name="update_time")
+    private Date updateTime;
+    @Column(name="create_time")
+    private Date createTime;
+    private String openid;
     private StatementType type;//账单类型
     private String content;//描述
-    private String price;//明细
+    private Long price;//明细
 }

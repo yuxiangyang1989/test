@@ -1,6 +1,6 @@
 package com.bigdata.user.vo;
 
-import com.bigdata.enums.UserInfoTypeEnum;
+import com.bigdata.enums.user.UserInfoTypeEnum;
 import lombok.Data;
 
 import java.io.Serializable;

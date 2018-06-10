@@ -1,7 +1,6 @@
 package com.bigdata.user.model;
 
-import com.bigdata.apiout.BaseModel;
-import com.bigdata.enums.RoleTypeEnum;
+import com.bigdata.enums.user.RoleTypeEnum;
 import lombok.Data;
 
 import javax.persistence.*;

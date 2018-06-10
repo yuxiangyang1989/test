@@ -1,4 +1,4 @@
-package com.bigdata.enums;
+package com.bigdata.enums.user;
 
 import lombok.Getter;
 

@@ -1,7 +1,7 @@
 package com.bigdata.user.vo;
 
 import com.bigdata.apiout.BaseVo;
-import com.bigdata.enums.UserInfoTypeEnum;
+import com.bigdata.enums.user.UserInfoTypeEnum;
 import com.bigdata.framework.common.utils.DESUtil;
 import com.bigdata.framework.common.utils.NumberUtils;
 import com.bigdata.framework.common.utils.StringUtils;
@@ -11,8 +11,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.nio.charset.Charset;
-import java.util.Base64;
-import java.util.Optional;
 
 /**
  * @author yang

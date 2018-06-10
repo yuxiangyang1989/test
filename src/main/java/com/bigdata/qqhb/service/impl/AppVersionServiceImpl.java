@@ -25,7 +25,7 @@ public class AppVersionServiceImpl implements AppVersionService {
     private AppVersionRepository appVersionRepository;
     @Override
     public AppVersion getAppVersion() throws SZBException {
-        Sort sort = new Sort(Sort.Direction.DESC,"create_time");
+        Sort sort = new Sort(Sort.Direction.DESC,"createTime");
         return appVersionRepository.findAll(sort).get(0);
     }
 

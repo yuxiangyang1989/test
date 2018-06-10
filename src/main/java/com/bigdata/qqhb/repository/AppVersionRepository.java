@@ -2,6 +2,7 @@ package com.bigdata.qqhb.repository;
 
 import com.bigdata.qqhb.model.AppVersion;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * @author yang
@@ -10,5 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-24
  * @version:
  */
-public interface AppVersionRepository extends JpaRepository<AppVersion, String> {
+@Repository
+public interface AppVersionRepository extends JpaRepository<AppVersion, Long> {
 }

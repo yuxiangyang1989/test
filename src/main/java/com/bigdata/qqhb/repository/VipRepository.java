@@ -10,5 +10,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-24
  * @version:
  */
-public interface VipRepository extends JpaRepository<Openvip, String> {
+public interface VipRepository extends JpaRepository<Openvip, Long> {
+    Openvip findByOpenid(String openid);
 }

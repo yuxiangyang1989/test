@@ -32,7 +32,7 @@ public class OpenVipVo extends BaseVo{
     private VipEnum shouqizuijia;//手气最佳概率
     private VipTypeEnum type;
     private Date expireTime;
-
+    /**/
     public OpenVipVo(){}
     public OpenVipVo(Openvip openvip){
         this.setSid(NumberUtils.compress(openvip.getId()));

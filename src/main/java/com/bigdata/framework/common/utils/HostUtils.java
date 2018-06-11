@@ -2,7 +2,10 @@ package com.bigdata.framework.common.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.net.Inet4Address;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 /**
  * @author yang
@@ -13,6 +16,7 @@ import java.net.InetAddress;
  */
 @Slf4j
 public class HostUtils {
+    public static String INTRANET_IP  = getLocalIp(); // 内网IP
     /**
      * 获取本机 IP.
      *
@@ -25,6 +29,38 @@ public class HostUtils {
         } catch (Exception ex) {
             log.error("Can not get ip of local machine", ex);
             return null;
+        }
+    }
+
+    /**
+     * 获得外网IP
+     * @return 外网IP
+     */
+    public static String getInternetIp(){
+        try{
+            Enumeration<NetworkInterface> networks = NetworkInterface.getNetworkInterfaces();
+            InetAddress ip = null;
+            Enumeration<InetAddress> addrs;
+            while (networks.hasMoreElements())
+            {
+                addrs = networks.nextElement().getInetAddresses();
+                while (addrs.hasMoreElements())
+                {
+                    ip = addrs.nextElement();
+                    if (ip != null
+                            && ip instanceof Inet4Address
+                            && ip.isSiteLocalAddress()
+                            && !ip.getHostAddress().equals(INTRANET_IP))
+                    {
+                        return ip.getHostAddress();
+                    }
+                }
+            }
+
+            // 如果没有外网IP，就返回内网IP
+            return INTRANET_IP;
+        } catch(Exception e){
+            throw new RuntimeException(e);
         }
     }
 }

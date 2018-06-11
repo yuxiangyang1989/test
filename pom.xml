@@ -45,6 +45,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
+			<version>3.7</version>
 		</dependency>
 		<!--验证码依赖-->
 		<dependency>
@@ -140,6 +141,12 @@
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>${swagger.version}</version>
 		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-staticdocs</artifactId>
+			<version>2.2.2</version>
+			<scope>test</scope>
+		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-rsa -->
 		<dependency>
@@ -158,7 +165,7 @@
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<version>3.4</version>
+			<version>3.3.2</version>
 		</dependency>
 
 		<dependency>
@@ -182,7 +189,62 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<!--<plugin>
+			<groupId>com.github.kongchen</groupId>
+			<artifactId>swagger-maven-plugin</artifactId>
+			<version>3.1.4</version>&lt;!&ndash;（貌似别的版本不行，耗了挺长时间的）&ndash;&gt;
+			<configuration>
+				<apiSources>
+					<apiSource>
+						<springmvc>false</springmvc>
+						<locations>
+							<location>com.bigdata.user.controller</location>
+							<location>com.bigdata.szb.controller</location>
+							<location>com.bigdata.qqhb.controller</location>
+						</locations>
+						<schemes>
+							<scheme>http</scheme>
+							<scheme>https</scheme>
+						</schemes>
+						<host></host>
+						<basePath></basePath>
+						<info>
+							<title>文档搜索器</title>
+							<version>v1</version>
+							<description>
+								文档搜索器-API
+							</description>
+							&lt;!&ndash;<termsOfService>
+								http://www.github.com/kongchen/swagger-maven-plugin
+							</termsOfService>
+							<contact>
+								<email>xxx</email>
+								<name>xxx</name>
+								<url>xxx</url>
+							</contact>
+							<license>
+								<url>http://www.apache.org/licenses/LICENSE-2.0.html</url>
+								<name>Apache 2.0</name>
+							</license>&ndash;&gt;
+						</info>
+						&lt;!&ndash; 模板位置，支持classpath:类型路径 &ndash;&gt;&lt;!&ndash;<templatePath>classpath:/template/markdown.hbs</templatePath>&ndash;&gt;
+						&lt;!&ndash; 编译期扫描controller之后合成的API文档输出位置 &ndash;&gt; &lt;!&ndash;<outputPath>${project.basedir}/src/main/webapp/swagger-ui/document.md</outputPath>&ndash;&gt;
+						&lt;!&ndash; web目录下的js、css等资源位置 &ndash;&gt; <swaggerDirectory>${project.basedir}/src/main/webapp/swagger-ui/</swaggerDirectory>
+
+					</apiSource>
+				</apiSources>
+			</configuration>
+			<executions>
+				<execution>
+					<phase>compile</phase>
+					<goals>
+						<goal>generate</goal>
+					</goals>
+				</execution>
+			</executions>
+			</plugin>-->
 		</plugins>
+		<defaultGoal>compile</defaultGoal>
 	</build>
 
 

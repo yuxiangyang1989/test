@@ -62,7 +62,7 @@ public class StatementController extends AbstractController {
         if (!validateToken(token,openid))
             return new ApiOut.Builder<List<StatementRankVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
 
-        Pageable pageable = new PageRequest(vo.getPage(), vo.getSize());
+        Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
         return new ApiOut.Builder<List<StatementRankVo>>().data(statementService.findBillListRank(vo.getStime(),vo.getEtime())).code(ResponseCode.SUCCESS).build();
     }
 
@@ -71,7 +71,7 @@ public class StatementController extends AbstractController {
     public ApiOut<List<StatementRankVo>> getBillListFrequency(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
         if (!validateToken(token,openid))
             return new ApiOut.Builder<List<StatementRankVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
-        Pageable pageable = new PageRequest(vo.getPage(), vo.getSize());
+        Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
         return new ApiOut.Builder<List<StatementRankVo>>().data(statementService.findBillListFrequency(vo.getStime(),vo.getEtime())).code(ResponseCode.SUCCESS).build();
     }
 
@@ -80,7 +80,7 @@ public class StatementController extends AbstractController {
     public ApiOut<BillVo> postBill(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
         if (!validateToken(token,openid))
             return new ApiOut.Builder<BillVo>().message("token失效").code(ResponseCode.TokenInvalid).build();
-        Pageable pageable = new PageRequest(vo.getPage(), vo.getSize());
+        Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
         return new ApiOut.Builder<BillVo>().data(new BillVo(statementService.insert(vo.toModel()))).code(ResponseCode.SUCCESS).build();
     }
 

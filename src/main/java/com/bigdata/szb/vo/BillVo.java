@@ -7,6 +7,7 @@ import com.bigdata.szb.model.Statement;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.Date;
 import java.util.Optional;
 
@@ -24,9 +25,13 @@ public class BillVo extends BaseVo{
     private StatementType type;//账单类型
     private String content;//描述
     private Long price;//明细
+    private String nikeName;
+    private String redName;
     private Date stime;
     private Date etime;
+    @NotEmpty
     private Integer page;
+    @NotEmpty
     private Integer size;
 
     public BillVo(){}
@@ -36,13 +41,20 @@ public class BillVo extends BaseVo{
         this.setOpenid(statement.getOpenid());
         this.setType(statement.getType());
         this.setContent(statement.getContent());
-        this.setPrice(statement.getPrice());
+        this.setNikeName(statement.getNikeName());
+        this.setRedName(statement.getRedName());
+        this.setPrice(statement.getAmount());
     }
 
     public Statement toModel(){
         Statement statement = new Statement();
-        statement.setId(NumberUtils.uncompress(this.getSid()));
+        Optional.ofNullable(this.getSid()).ifPresent(sid->statement.setId(NumberUtils.uncompress(sid)));
         statement.setContent(this.getContent());
+        statement.setRedName(this.getRedName());
+        statement.setAmount(this.getPrice());
+        statement.setOpenid(this.getOpenid());
+        statement.setType(this.getType());
+        statement.setNikeName(this.getNikeName());
         statement.setUpdateTime(new Date());
         return statement;
     }

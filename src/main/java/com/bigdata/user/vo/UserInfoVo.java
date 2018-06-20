@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.nio.charset.Charset;
+import java.util.Optional;
 
 /**
  * @author yang
@@ -53,4 +54,15 @@ public class UserInfoVo extends BaseVo{
         this.token = new String(DESUtil.encrypt(TokenUtil.generateToken()+"-"+userInfo.getLoginName(),salt), Charset.defaultCharset());
     }
 
+    public UserInfo toModel(){
+        UserInfo userInfo = new UserInfo();
+        Optional.ofNullable(this.getSid()).ifPresent(sid->userInfo.setId(NumberUtils.uncompress(sid)));
+        Optional.ofNullable(this.getUsername()).ifPresent(name->userInfo.setUsername(name));
+        Optional.ofNullable(this.getPassword()).ifPresent(password->userInfo.setPassword(password));
+        Optional.ofNullable(this.getPhone()).ifPresent(phone->userInfo.setPhone(phone));
+        Optional.ofNullable(this.getCardId()).ifPresent(cardId->userInfo.setCardId(cardId));
+        Optional.ofNullable(this.getLoginname()).ifPresent(loginname->userInfo.setLoginName(loginname));
+        Optional.ofNullable(this.getEmail()).ifPresent(email->userInfo.setEmail(email));
+        return userInfo;
+    }
 }

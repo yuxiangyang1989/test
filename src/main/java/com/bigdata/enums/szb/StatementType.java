@@ -1,9 +1,12 @@
 package com.bigdata.enums.szb;
 
-import lombok.Data;
+import com.bigdata.enums.IEnumType;
+import com.bigdata.framework.common.utils.StringUtils;
 import lombok.Getter;
 
-import java.util.Objects;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author yang
@@ -13,10 +16,16 @@ import java.util.Objects;
  * @version:1.0.0
  */
 @Getter
-public enum StatementType {
+public enum StatementType implements IEnumType {
 
-    EXPENDITURE(1,"支出"),
-    INCOME(2,"收入");
+    EXPENDITURE(0,"支出"),
+    INCOME(1,"收入");
+
+    private final static Map<Integer, StatementType> typeMap
+            = Arrays.stream(StatementType.values()).collect(Collectors.toMap(StatementType::code, type -> type));
+
+    private final static Map<String, StatementType> typeByNameMap
+            = Arrays.stream(StatementType.values()).collect(Collectors.toMap(type -> type.name().toLowerCase(), type -> type));
 
     StatementType(int code,String desc){
         this.code = code;
@@ -25,14 +34,34 @@ public enum StatementType {
     private final int code;
     private final String desc;
 
-    //获取枚举实例
-    public static StatementType fromValue(Integer value) {
-        for (StatementType statusEnum : StatementType.values()) {
-            if (Objects.equals(value, statusEnum.getCode())) {
-                return statusEnum;
-            }
-        }
-        throw new IllegalArgumentException();
+    @Override
+    public int code() {
+        return this.code;
     }
+
+    @Override
+    public String desc() {
+        return this.desc;
+    }
+
+    /**
+     * @param code 代码
+     * @return 转换出来的状态码
+     */
+    public static StatementType parse(Integer code) {
+        return typeMap.get(code);
+    }
+
+    /**
+     * @param name 名字
+     * @return 转换出来的状态码
+     */
+    public static StatementType parse(String name) {
+        if (StringUtils.isBlank(name)) {
+            return null;
+        }
+        return typeByNameMap.get(name.trim().toLowerCase());
+    }
+
 
 }

@@ -1,7 +1,8 @@
 package com.bigdata.qqhb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.qqhb.model.Openvip;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author yang
@@ -10,6 +11,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-24
  * @version:
  */
-public interface VipRepository extends JpaRepository<Openvip, Long> {
+@Mapper
+public interface VipRepository extends IBaseRepository<Openvip, Long> {
     Openvip findByOpenid(String openid);
 }

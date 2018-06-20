@@ -1,8 +1,10 @@
 package com.bigdata.qqhb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.qqhb.model.AppVersion;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author yang
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
  * @date 2018-05-24
  * @version:
  */
-@Repository
-public interface AppVersionRepository extends JpaRepository<AppVersion, Long> {
+@Mapper
+public interface AppVersionRepository extends IBaseRepository<AppVersion, Long> {
+    List<AppVersion> findAll();
 }

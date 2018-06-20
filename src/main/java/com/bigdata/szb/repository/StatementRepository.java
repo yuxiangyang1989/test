@@ -1,10 +1,8 @@
 package com.bigdata.szb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.szb.model.Statement;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
@@ -15,8 +13,14 @@ import java.util.List;
  * @date 2018-06-10
  * @version:
  */
-@Repository
-public interface StatementRepository extends JpaRepository<Statement,Long>,JpaSpecificationExecutor<Statement> {
+@Mapper
+public interface StatementRepository extends IBaseRepository<Statement,Long>{
 
+    List<Statement> findAll(Statement statement);
+    List<Statement> findBillListRank(Statement statement);
+    List<Statement> findBillListFrequency(Statement statement);
 
+    Integer findBillGroupByMonth(String openid);
+
+    List<Statement> findBillGroupByProduct(String openid);
 }

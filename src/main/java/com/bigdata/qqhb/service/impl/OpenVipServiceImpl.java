@@ -29,7 +29,9 @@ public class OpenVipServiceImpl implements OpenVipService {
 
     @Override
     public Openvip openVip(Openvip openvip) throws SZBException {
-        return vipRepository.save(openvip);
+        if (vipRepository.create(openvip)>0)
+            return openvip;
+        return null;
     }
 
 

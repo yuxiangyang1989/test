@@ -7,8 +7,6 @@ import com.bigdata.qqhb.repository.AppVersionRepository;
 import com.bigdata.qqhb.service.AppVersionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 /**
@@ -25,8 +23,7 @@ public class AppVersionServiceImpl implements AppVersionService {
     private AppVersionRepository appVersionRepository;
     @Override
     public AppVersion getAppVersion() throws SZBException {
-        Sort sort = new Sort(Sort.Direction.DESC,"createTime");
-        return appVersionRepository.findAll(sort).get(0);
+        return appVersionRepository.findAll().get(0);
     }
 
     @Override

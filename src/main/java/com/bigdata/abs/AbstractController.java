@@ -11,6 +11,7 @@ import com.bigdata.framework.web.util.HostUtils;
 import com.bigdata.framework.web.util.HttpClientUtils;
 import com.bigdata.user.vo.CodeVo;
 import com.bigdata.user.vo.SimpleUser;
+import com.bigdata.user.vo.UserInfoVo;
 import com.google.common.base.Splitter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ import java.util.Optional;
 @Slf4j
 @RestController
 public class AbstractController {
-    @Value("wx.effective.url")
+    @Value("${wx.effective.url}")
     private String tokenUrl;
 
     protected boolean validateToken(String token,String openid) {
@@ -60,5 +61,10 @@ public class AbstractController {
             log.error("token验证失败------errcode={}--errmsg={}",codeVo.getErrcode(),codeVo.getErrmsg());
             return false;
         }
+    }
+
+    protected boolean validateUser(String sid,final HttpServletRequest request){
+        UserInfoVo infoVo = (UserInfoVo)request.getAttribute(sid);
+        return null!=infoVo;
     }
 }

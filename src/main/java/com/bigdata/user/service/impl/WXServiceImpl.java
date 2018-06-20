@@ -67,7 +67,7 @@ public class WXServiceImpl implements WXService{
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        wxTokenRepository.save(wxToken.toModel());
+        wxTokenRepository.create(wxToken.toModel());
         return wxToken;
     }
 
@@ -83,7 +83,7 @@ public class WXServiceImpl implements WXService{
         }catch (Exception e){
             log.error(e.getMessage());
         }
-        wxTokenRepository.save(wxToken.toModel());
+        wxTokenRepository.create(wxToken.toModel());
         return wxToken;
     }
 
@@ -102,10 +102,10 @@ public class WXServiceImpl implements WXService{
         }
         WXUserInfo wxUserInfo = wxUserInfoRepository.findByOpenid(wxUserInfoVo.getOpenid());
         if (null ==wxUserInfoVo){
-            wxUserInfoRepository.save(wxUserInfoVo.toModel());
+            wxUserInfoRepository.create(wxUserInfoVo.toModel());
         }else{
             wxUserInfo.setUpdateTime(new Date());
-            wxUserInfoRepository.save(wxUserInfo);
+            wxUserInfoRepository.update(wxUserInfo);
         }
 
         return wxUserInfoVo;

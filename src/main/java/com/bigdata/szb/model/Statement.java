@@ -1,10 +1,12 @@
 package com.bigdata.szb.model;
 
+import com.bigdata.apiout.BaseModel;
+import com.bigdata.enums.szb.ProductType;
 import com.bigdata.enums.szb.StatementType;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.util.Date;
+
 
 /**
  * @author yang
@@ -14,18 +16,15 @@ import java.util.Date;
  * @version:
  */
 @Data
-@Entity
-@Table(name = "statement")
-public class Statement{
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name="update_time")
-    private Date updateTime;
-    @Column(name="create_time")
-    private Date createTime;
-    private String openid;
-    private StatementType type;//账单类型
+public class Statement extends BaseModel{
+
     private String content;//描述
-    private Long price;//明细
+    private Long amount;//明细
+    private StatementType type;//账单类型
+    private ProductType productType;
+    private String openid;
+    private String nikeName;
+    private String redName;
+    private Date stime;
+    private Date etime;
 }

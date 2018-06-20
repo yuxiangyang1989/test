@@ -11,13 +11,12 @@ import com.bigdata.szb.vo.StatementRankVo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yang
@@ -41,49 +40,48 @@ public class StatementController extends AbstractController {
 
     @ApiOperation(value = "账单流水",notes = "账单流水")
     @GetMapping(path = "/getBills",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
-    public ApiOut<List<BillVo>> getList(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
-        if (!validateToken(token,openid))
+    public ApiOut<List<BillVo>> getList(BillVo vo, @RequestHeader String token){
+        if (!validateToken(token,vo.getOpenid()))
             return new ApiOut.Builder<List<BillVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
-        Pageable pageable = new PageRequest(vo.getPage(), vo.getSize());
-        return new ApiOut.Builder<List<BillVo>>().data(converter.toVos(statementService.findBillList(vo.getOpenid(),pageable,vo.getStime(),vo.getEtime()),this::toBillVo)).code(ResponseCode.SUCCESS).build();
+        return new ApiOut.Builder<List<BillVo>>().data(converter.toVos(statementService.findBillList(vo.getOpenid(),vo.getPage(),vo.getSize(),vo.getStime(),vo.getEtime()),this::toBillVo)).code(ResponseCode.SUCCESS).build();
     }
 
-    @ApiOperation(value = "总额排行",notes = "总额排行")
+    @ApiOperation(value = "修改备注",notes = "修改备注")
     @PostMapping(path = "/modify",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
-    public ApiOut<BillVo> modify(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
-        if (!validateToken(token,openid))
+    public ApiOut<BillVo> modify(BillVo vo, @RequestHeader String token){
+        if (!validateToken(token,vo.getOpenid()))
             return new ApiOut.Builder<BillVo>().message("token失效").code(ResponseCode.TokenInvalid).build();
+
         return new ApiOut.Builder<BillVo>().data(new BillVo(statementService.modify(vo.toModel()))).code(ResponseCode.SUCCESS).build();
     }
 
     @ApiOperation(value = "总额排行",notes = "总额排行")
     @GetMapping(path = "/getBillRank",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
-    public ApiOut<List<StatementRankVo>> getBillListRank(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
-        if (!validateToken(token,openid))
-            return new ApiOut.Builder<List<StatementRankVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
+    public ApiOut<List<BillVo>> getBillListRank(BillVo vo, @RequestHeader String token){
+        if (!validateToken(token,vo.getOpenid()))
+            return new ApiOut.Builder<List<BillVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
 
-        Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
-        return new ApiOut.Builder<List<StatementRankVo>>().data(statementService.findBillListRank(vo.getStime(),vo.getEtime())).code(ResponseCode.SUCCESS).build();
+        return new ApiOut.Builder<List<BillVo>>().data(converter.toVos(statementService.findBillListRank(vo.getOpenid(),vo.getPage(),vo.getSize(),vo.getStime(),vo.getEtime()),this::toBillVo)).code(ResponseCode.SUCCESS).build();
     }
 
     @ApiOperation(value = "频率排行",notes = "频率排行")
     @GetMapping(path = "/getBillFrequency",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
-    public ApiOut<List<StatementRankVo>> getBillListFrequency(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
-        if (!validateToken(token,openid))
-            return new ApiOut.Builder<List<StatementRankVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
-        Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
-        return new ApiOut.Builder<List<StatementRankVo>>().data(statementService.findBillListFrequency(vo.getStime(),vo.getEtime())).code(ResponseCode.SUCCESS).build();
+    public ApiOut<List<BillVo>> getBillListFrequency(BillVo vo, @RequestHeader String token){
+        if (!validateToken(token,vo.getOpenid()))
+            return new ApiOut.Builder<List<BillVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
+        return new ApiOut.Builder<List<BillVo>>().data(converter.toVos(statementService.findBillListFrequency(vo.getOpenid(),vo.getPage(),vo.getSize(),vo.getStime(),vo.getEtime()),this::toBillVo)).code(ResponseCode.SUCCESS).build();
     }
 
     @ApiOperation(value = "流水添加",notes = "流水添加")
     @PostMapping (path = "/bill",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
-    public ApiOut<BillVo> postBill(BillVo vo, @RequestHeader String token, @RequestHeader String openid){
-        if (!validateToken(token,openid))
-            return new ApiOut.Builder<BillVo>().message("token失效").code(ResponseCode.TokenInvalid).build();
-        Pageable pageable = PageRequest.of(vo.getPage(), vo.getSize());
+    public ApiOut<BillVo> postBill(BillVo vo){
         return new ApiOut.Builder<BillVo>().data(new BillVo(statementService.insert(vo.toModel()))).code(ResponseCode.SUCCESS).build();
     }
-
+    @ApiOperation(value = "近一个月的收付近况",notes = "近一个月的收付近况")
+    @GetMapping(path = "/bill/{openid}",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
+    public ApiOut<Map<String, Object>> getMoth(@PathVariable String openid, @RequestHeader String token){
+        return new ApiOut.Builder<Map<String, Object>>().data(statementService.findMonth(openid)).code(ResponseCode.SUCCESS).build();
+    }
     /*---------------------------------private----------------------------------------------------*/
     private BillVo toBillVo(Statement ad){
         return new BillVo(ad);

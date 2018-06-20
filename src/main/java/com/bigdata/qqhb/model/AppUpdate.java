@@ -3,7 +3,6 @@ package com.bigdata.qqhb.model;
 import com.bigdata.apiout.BaseModel;
 import lombok.Data;
 
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -15,14 +14,10 @@ import java.util.Date;
  * @version:
  */
 @Data
-@Entity
 public class AppUpdate {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
-    @Column(name="update_time")
     private Date updateTime;
-    @Column(name="create_time")
     private Date createTime;
     private String userCode;
     private String versionNum;

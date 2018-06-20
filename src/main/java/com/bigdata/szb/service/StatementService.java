@@ -3,11 +3,10 @@ package com.bigdata.szb.service;
 import com.bigdata.exception.SZBException;
 import com.bigdata.szb.model.Statement;
 import com.bigdata.szb.vo.StatementRankVo;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author yang
@@ -20,10 +19,12 @@ public interface StatementService {
     /**
      * 获取流水
      * @param openid
-     * @param pageable
+     * @param stime
+     * @param etime
      * @return
+     * @throws SZBException
      */
-    List<Statement> findBillList(String openid, Pageable pageable,Date stime, Date etime) throws SZBException;
+    List<Statement> findBillList(String openid,Integer page,Integer size,Date stime, Date etime) throws SZBException;
 
     /**
      * 修改昵称、产品名
@@ -36,13 +37,15 @@ public interface StatementService {
      * 获取前十排行
      * @return
      */
-    List<StatementRankVo> findBillListRank(Date stime, Date etime) throws SZBException;
+    List<Statement> findBillListRank(String openid,Integer page,Integer size,Date stime, Date etime) throws SZBException;
 
     /**
      * 获取前十的活动率排行
      * @return
      */
-    List<StatementRankVo> findBillListFrequency(Date stime, Date etime) throws SZBException;
+    List<Statement> findBillListFrequency(String openid,Integer page,Integer size,Date stime, Date etime) throws SZBException;
 
     Statement insert(Statement statement) throws SZBException;
+
+    Map<String, Object> findMonth(String openid) throws SZBException;
 }

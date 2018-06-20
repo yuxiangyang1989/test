@@ -1,8 +1,8 @@
 package com.bigdata.user.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.user.model.WXUserInfo;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author yang
@@ -11,7 +11,10 @@ import org.springframework.stereotype.Repository;
  * @date 2018-06-09
  * @version:1.0.0
  */
-@Repository
-public interface WXUserInfoRepository extends JpaRepository<WXUserInfo,Long>{
+@Mapper
+public interface WXUserInfoRepository extends IBaseRepository<WXUserInfo,Long> {
+
     WXUserInfo findByOpenid(String openid);
+
+    WXUserInfo findById(Long id);
 }

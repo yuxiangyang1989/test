@@ -38,17 +38,6 @@ CREATE TABLE `ad` (
   `updateTime` timestamp,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-#账单
-CREATE TABLE `statement` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `content` varchar(255) DEFAULT NULL,
-  `price` bigint(20) NOT NULL,
-  `type` tinyint(3) NOT NULL,
-  `openid` varchar(64) NOT NULL,
-  `create_time` timestamp  not null DEFAULT CURRENT_TIMESTAMP,
-  `updateTime` timestamp ,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 #app版本
 CREATE TABLE `app_version` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
@@ -82,5 +71,19 @@ CREATE TABLE `openvip` (
   `create_time` timestamp DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp,
   `expire_time` timestamp,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#账单
+CREATE TABLE `statement` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `content` varchar(255) DEFAULT NULL COMMENT '备注',
+  `amount` bigint(20) NOT NULL COMMENT '金额',
+  `product_type` tinyint(3) NOT NULL DEFAULT '1' COMMENT '产品类型',
+  `type` tinyint(3) NOT NULL COMMENT '类型:0-支出,1-收入',
+  `openid` varchar(64) NOT NULL COMMENT '用户唯一标示',
+  `nike_name` varchar(32) NOT NULL COMMENT '用户名昵称',
+  `red_name` varchar(32) NOT NULL COMMENT '发红包者昵称',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

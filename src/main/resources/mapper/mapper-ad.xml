@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bigdata.szb.repository.AdRepository">
+    <resultMap id="BaseResult" type="com.bigdata.szb.model.Ad">
+        <id property="id" column="id"/>
+        <result property="url" column="url"/>
+        <result property="adUrl" column="ad_url"/>
+        <result property="validity" column="validity" typeHandler="com.bigdata.szb.handler.EnumAdHandler"/>
+        <result property="type" column="type" typeHandler="com.bigdata.szb.handler.EnumAdHandler"/>
+        <result property="priority" column="priority"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="tableName">`ad`</sql>
+
+    <sql id="mainColumns">
+        `id`, `url`, `ad_url`, `validity`, `type`,`priority`,`create_time`, `update_time`
+    </sql>
+
+    <!-- 创建单个或多个对象 -->
+    <insert id="create" keyProperty="id" keyColumn="id" parameterType="com.bigdata.user.model.WXUserInfo">
+        INSERT INTO
+        <include refid="tableName"/>
+        (`url`, `ad_url`, `validity`, `type`, `priority``)
+        VALUES
+        <foreach item="item" index="index" collection="array" separator=",">
+            (#{item.url}, #{item.ad_url},#{item.validity,typeHandler="com.bigdata.szb.handler.EnumAdHandler"}, #{item.type,typeHandler=com.bigdata.szb.handler.EnumAdHandler},#{item.priority})
+        </foreach>
+    </insert>
+
+    <select id="findAll"  resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+    </select>
+
+    <!-- 主键查找 -->
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        where `id` = #{id}
+    </select>
+
+    <update id="update" parameterType="com.bigdata.user.model.WXUserInfo">
+        UPDATE
+        <include refid="tableName"/>
+        <set>
+            <if test="updatedTime !=null">
+              "updated_time"=#{updatedTime}
+            </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+
+</mapper>

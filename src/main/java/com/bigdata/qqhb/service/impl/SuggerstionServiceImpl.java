@@ -24,6 +24,8 @@ public class SuggerstionServiceImpl implements SuggestionService {
 
     @Override
     public Suggestion add(Suggestion suggestion) throws SZBException{
-        return suggestionRepository.save(suggestion);
+        if (suggestionRepository.create(suggestion)>0)
+            return suggestion;
+        return null;
     }
 }

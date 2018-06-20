@@ -1,7 +1,10 @@
 package com.bigdata.qqhb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.qqhb.model.AppList;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author yang
@@ -10,5 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-22
  * @version:1.0.0
  */
-public interface AppListRepository  extends JpaRepository<AppList, String> {
+@Mapper
+public interface AppListRepository  extends IBaseRepository<AppList, String> {
+    List<AppList>  findAll();
 }

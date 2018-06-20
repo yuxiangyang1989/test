@@ -6,7 +6,6 @@ import com.bigdata.qqhb.repository.AppListRepository;
 import com.bigdata.qqhb.service.AppListService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,8 +25,6 @@ public class AppListServiceImpl implements AppListService {
     private AppListRepository appListRepository;
     @Override
     public List<AppList> findAppAll() throws SZBException {
-        //按时间排序查询
-        Sort sort = new Sort(Sort.Direction.ASC,"update_time");
-        return appListRepository.findAll(sort);
+        return appListRepository.findAll();
     }
 }

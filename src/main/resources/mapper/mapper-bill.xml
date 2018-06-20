@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bigdata.szb.repository.StatementRepository">
+    <resultMap id="BaseResult" type="com.bigdata.szb.model.Statement">
+        <id property="id" column="id"/>
+        <result property="content" column="content"/>
+        <result property="amount" column="amount"/>
+        <result property="productType" column="product_type" typeHandler="com.bigdata.szb.handler.EnumProductHandler"/>
+        <result property="type" column="type" typeHandler="com.bigdata.szb.handler.EnumStatementHandler"/>
+        <result property="openid" column="openid"/>
+        <result property="nikeName" column="nike_name"/>
+        <result property="redName" column="red_name"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="tableName">`statement`</sql>
+
+    <sql id="mainColumns">
+        `id`, `content`, `amount`, `type`,`product_type`, `openid`,`nike_name`,`red_name`,`create_time`, `update_time`
+    </sql>
+
+    <!-- 创建单个或多个对象 -->
+    <insert id="create" keyProperty="id" keyColumn="id" parameterType="com.bigdata.user.model.WXUserInfo">
+        INSERT INTO
+        <include refid="tableName"/>
+        (`content`, `amount`, `type`, `openid`, `nike_name`,`red_name`,`product_type`)
+        VALUES
+        <foreach item="item" index="index" collection="array" separator=",">
+            (#{item.content}, #{item.amount},#{item.type,typeHandler=com.bigdata.szb.handler.EnumStatementHandler}, #{item.openid},
+            #{item.nikeName},#{item.redName},#{item.productType,typeHandler=com.bigdata.szb.handler.EnumProductHandler})
+        </foreach>
+    </insert>
+
+    <select id="findByOpenid" parameterType="java.lang.String" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        WHERE openid = #{openid}
+    </select>
+
+    <select id="findAll" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        <where>
+            <if test="openid!=null">
+                openid = #{openid}
+            </if>
+            <if test="stime!=null">
+                <![CDATA[and create_time >= #{stime}]]>
+            </if>
+            <if test="etime!=null">
+                <![CDATA[and create_time <= #{etime}]]>
+            </if>
+        </where>
+    </select>
+    <!--总额排行-->
+    <select id="findBillListRank" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        <where>
+            <if test="openid!=null">
+                openid = #{openid}
+            </if>
+            <if test="stime!=null">
+                <![CDATA[and create_time >= #{stime}]]>
+            </if>
+            <if test="etime!=null">
+                <![CDATA[and create_time <= #{etime}]]>
+            </if>
+        </where>
+
+    </select>
+    <!--频率排行-->
+    <select id="findBillListFrequency" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        <where>
+            <if test="openid!=null">
+                `openid` = #{openid}
+            </if>
+            <if test="stime!=null">
+                <![CDATA[and `create_time` >= #{stime}]]>
+            </if>
+            <if test="etime!=null">
+                <![CDATA[and `create_time` <= #{etime}]]>
+            </if>
+        </where>
+
+    </select>
+
+    <!-- 主键查找 -->
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        where `id` = #{id}
+    </select>
+
+
+    <!--修改备注-->
+    <update id="update" parameterType="com.bigdata.szb.model.Statement">
+        UPDATE
+        <include refid="tableName"/>
+        <set>
+            <if test="nikeName!=null">
+                `nike_name`=#{nikeName},
+            </if>
+            <if test="redName!=null">
+                `red_name`=#{redName},
+            </if>
+                `updated_time`= now()
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+    <!--近一月收付近况总额-->
+    <select id="findBillGroupByMonth" parameterType="java.lang.String" resultType="java.lang.Integer">
+        SELECT
+        SUM(if(type=1,amount,-amount)) as amount
+        FROM
+        <include refid="tableName"/>
+        WHERE
+        openid =#{openid} GROUP BY MONTH(NOW())
+    </select>
+    <!--近一月收付近况 根据产品的总额-->
+    <select id="findBillGroupByProduct" parameterType="java.lang.String" resultMap="BaseResult">
+        SELECT
+        SUM(if(type=1,amount,-amount)) as amount,product_type
+        FROM
+        <include refid="tableName"/>
+        WHERE
+        openid =#{openid} GROUP BY MONTH(NOW()),product_type
+    </select>
+
+</mapper>

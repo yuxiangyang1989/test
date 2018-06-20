@@ -1,7 +1,8 @@
 package com.bigdata.qqhb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.qqhb.model.Account;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author yang
@@ -10,5 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-22
  * @version:1.0.0
  */
-public interface AccountRepository extends JpaRepository<Account,String> {
+@Mapper
+public interface AccountRepository extends IBaseRepository<Account,String> {
 }

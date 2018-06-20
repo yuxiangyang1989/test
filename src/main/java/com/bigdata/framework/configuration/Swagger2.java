@@ -29,7 +29,7 @@ public class Swagger2 {
 
     @Bean
     public Docket createUserApi() throws Exception{
-        return new Docket(DocumentationType.SWAGGER_2).host(HostUtils.getInternetIp())
+        return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("用户API模块")
                 .apiInfo(apiInfo())
                 .select()
@@ -41,7 +41,7 @@ public class Swagger2 {
 
     @Bean
     public Docket createWxUserApi() throws Exception{
-        return new Docket(DocumentationType.SWAGGER_2).host(HostUtils.getInternetIp())
+        return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("微信用户API模块")
                 .apiInfo(apiInfo())
                 .select()
@@ -53,7 +53,7 @@ public class Swagger2 {
 
     @Bean
     public Docket createQhbApi() throws Exception{
-        return new Docket(DocumentationType.SWAGGER_2).host(HostUtils.getInternetIp())
+        return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("抢红包API模块")
                 .apiInfo(apiInfo())
                 .select()
@@ -66,7 +66,7 @@ public class Swagger2 {
 
     @Bean
     public Docket createSZBApi() throws Exception{
-        return new Docket(DocumentationType.SWAGGER_2).host(HostUtils.getInternetIp())
+        return new Docket(DocumentationType.SWAGGER_2)
                 .groupName("收账宝API模块")
                 .apiInfo(apiInfo())
                 .select()

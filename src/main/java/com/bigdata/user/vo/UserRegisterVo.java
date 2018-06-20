@@ -32,6 +32,9 @@ public class UserRegisterVo extends BaseVo{
     @NotEmpty(message = "电话不能为空")
     @ApiModelProperty(value="电话",name="phone",example="13888888888",required=true)
     private String phone;
+    @NotEmpty(message = "验证码不能为空")
+    @ApiModelProperty(value="验证码",name="verCode",example="123456",required=true)
+    private String verCode;
     @ApiModelProperty(value="电子邮箱")
     private String email;
     @ApiModelProperty(value="身份证")

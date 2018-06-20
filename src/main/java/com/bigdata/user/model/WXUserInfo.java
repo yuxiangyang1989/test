@@ -1,8 +1,7 @@
 package com.bigdata.user.model;
 
+import com.bigdata.apiout.BaseModel;
 import lombok.Data;
-
-import javax.persistence.*;
 import java.util.Date;
 
 /**
@@ -13,12 +12,7 @@ import java.util.Date;
  * @version:
  */
 @Data
-@Entity
-@Table(name = "wx_user_info")
-public class WXUserInfo {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class WXUserInfo extends BaseModel{
     private String openid;
     private String nickname;
     private Integer sex;
@@ -28,9 +22,4 @@ public class WXUserInfo {
     private String headimgurl;
     private String privilege;
     private String unionid;
-    @Column(name="update_time")
-    private Date updateTime;
-    @Column(name="create_time")
-    private Date createTime;
-
 }

@@ -1,8 +1,10 @@
 package com.bigdata.szb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.szb.model.Ad;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author yang
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Repository;
  * @date 2018-06-09
  * @version:
  */
-@Repository
-public interface AdRepository extends JpaRepository<Ad,Long>{
+@Mapper
+public interface AdRepository extends IBaseRepository<Ad,Long> {
+    List<Ad> findAll();
 }

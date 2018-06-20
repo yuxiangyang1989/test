@@ -7,7 +7,6 @@ import com.bigdata.user.repository.SysRoleRepository;
 import com.bigdata.user.service.SysRoleService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +28,8 @@ public class SysRoleServiceImpl implements SysRoleService{
     public List<SysRole> selectRoleByUser(UserInfo userInfo) throws SZBException{
         SysRole sysRole = new SysRole();
         sysRole.setId(userInfo.getRoleId());
-        Example<SysRole> example = Example.of(sysRole);
-        return sysRoleRepository.findAll(example);
+        //Example<SysRole> example = Example.of(sysRole);
+        return null;
     }
 
 }

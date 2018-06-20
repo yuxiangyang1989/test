@@ -1,7 +1,8 @@
 package com.bigdata.qqhb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.qqhb.model.Suggestion;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author yang
@@ -10,5 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-24
  * @version:
  */
-public interface SuggestionRepository extends JpaRepository<Suggestion, String> {
+@Mapper
+public interface SuggestionRepository extends IBaseRepository<Suggestion, String> {
 }

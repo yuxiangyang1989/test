@@ -1,11 +1,12 @@
 package com.bigdata.qqhb.service.impl;
 
+import com.bigdata.framework.db.condition.QueryCondition;
+import com.bigdata.qqhb.condition.AccountQueryCondition;
 import com.bigdata.qqhb.model.Account;
 import com.bigdata.qqhb.repository.AccountRepository;
 import com.bigdata.qqhb.service.AccountService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -28,14 +29,18 @@ public class AccountServiceImpl implements AccountService{
     public Account info(String userCode) {
         Account account = new Account();
         account.setUserCode(userCode);
-        //ExampleMatcher matcher = ExampleMatcher.matching().withMatcher("userCode", ExampleMatcher.GenericPropertyMatchers.regex()).withIgnorePaths("focus");
-        Example<Account> example = Example.of(account/*,matcher*/);
+        AccountQueryCondition condition = new AccountQueryCondition();
+        condition.setAccount(account);
         //存在即返回, 无则提供默认值
-        return accountRepository.findOne(example).orElseGet(()->accountRepository.save(account));
+        Account relust = accountRepository.findOne(condition);
+        if (null!= relust)
+        return relust;
+        accountRepository.create(account);
+        return null;
     }
 
     @Override
     public boolean supply(Account account){;
-        return Optional.of(accountRepository.save(account)).isPresent();
+        return Optional.of(accountRepository.create(account)).isPresent();
     }
 }

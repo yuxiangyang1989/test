@@ -6,7 +6,6 @@ import com.bigdata.user.model.UserInfo;
 import com.bigdata.user.repository.SysPermissionRepository;
 import com.bigdata.user.service.SysPermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,7 +26,7 @@ public class SysPermissionServiceImpl implements SysPermissionService{
     public List<SysPermission> selectPermByUser(UserInfo userInfo) throws SZBException{
         SysPermission sysPermission = new SysPermission();
         sysPermission.setId(userInfo.getPermissionId());
-        Example<SysPermission> example = Example.of(sysPermission);
-        return sysPermissionRepository.findAll(example);
+        //Example<SysPermission> example = Example.of(sysPermission);
+        return null;
     }
 }

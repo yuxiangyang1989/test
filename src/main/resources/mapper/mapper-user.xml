@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bigdata.user.repository.WXUserInfoRepository">
+    <resultMap id="BaseResult" type="com.bigdata.user.model.WXUserInfo">
+        <id property="id" column="id"/>
+        <result property="openid" column="openid"/>
+        <result property="nickname" column="nickname"/>
+        <result property="sex" column="sex"/>
+        <result property="province" column="province"/>
+        <result property="city" column="city"/>
+        <result property="country" column="country"/>
+        <result property="headimgurl" column="headimgurl"/>
+        <result property="privilege" column="privilege"/>
+        <result property="unionid" column="unionid"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="tableName">wx_user_info</sql>
+
+    <sql id="mainColumns">
+        `id`, `openid`, `nickname`, `sex`, `province`,`city`,`country`,`headimgurl`,
+        `privilege`,`unionid`,`create_time`, `update_time`
+    </sql>
+
+    <!-- 创建单个或多个对象 -->
+    <insert id="create" keyProperty="id" keyColumn="id" parameterType="com.bigdata.user.model.WXUserInfo">
+        INSERT INTO
+        <include refid="tableName"/>
+        (`openid`, `nickname`, `sex`, `province`, `city`, `country`,
+        `headimgurl`, `privilege`,`unionid`, `shipping_fee`)
+        VALUES
+        <foreach item="item" index="index" collection="array" separator=",">
+            (#{item.openid}, #{item.nickname},#{item.sex}, #{item.province},
+            #{item.city},#{item.country},#{item.headimgurl}, #{item.privilege}, #{item.unionid})
+        </foreach>
+    </insert>
+
+    <select id="findByOpenid" parameterType="java.lang.String" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        WHERE openid = #{openid}
+    </select>
+
+    <!--<select id="findOne" parameterType="com.yanwei.platform.merchandise.condition.OrderQueryCondition" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        where `openid` = #{openid}
+    </select>-->
+
+
+    <!-- 主键查找 -->
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        where `id` = #{id}
+    </select>
+
+    <update id="update" parameterType="com.bigdata.user.model.WXUserInfo">
+        UPDATE
+        <include refid="tableName"/>
+        <set>
+            <if test="updatedTime !=null">
+              "updated_time"=#{updatedTime}
+            </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+
+</mapper>

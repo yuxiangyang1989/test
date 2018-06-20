@@ -1,7 +1,8 @@
 package com.bigdata.qqhb.repository;
 
+import com.bigdata.framework.db.repository.IBaseRepository;
 import com.bigdata.qqhb.model.Withcash;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @author yang
@@ -10,5 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @date 2018-05-24
  * @version:
  */
-public interface WithCashRepository extends JpaRepository<Withcash,String> {
+@Mapper
+public interface WithCashRepository extends IBaseRepository<Withcash,String> {
 }

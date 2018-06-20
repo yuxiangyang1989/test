@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -109,5 +110,21 @@ public class WXServiceImpl implements WXService{
         }
 
         return wxUserInfoVo;
+    }
+
+    @Override
+    @Transactional
+    public void save(WXToken token, WXUserInfo wxUserInfo) throws SZBException {
+
+        wxTokenRepository.create(token);
+
+        WXUserInfo wxUserInfo1 = wxUserInfoRepository.findByOpenid(wxUserInfo.getOpenid());
+        if (null ==wxUserInfo1){
+            wxUserInfoRepository.create(wxUserInfo);
+        }else{
+            wxUserInfo1.setUpdateTime(new Date());
+            wxUserInfoRepository.update(wxUserInfo1);
+        }
+
     }
 }

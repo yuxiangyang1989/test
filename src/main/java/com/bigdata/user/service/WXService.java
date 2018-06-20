@@ -1,6 +1,8 @@
 package com.bigdata.user.service;
 
 import com.bigdata.exception.SZBException;
+import com.bigdata.user.model.WXToken;
+import com.bigdata.user.model.WXUserInfo;
 import com.bigdata.user.vo.WXTokenVo;
 import com.bigdata.user.vo.WXUserInfoVo;
 
@@ -43,4 +45,6 @@ public interface WXService {
      * @throws SZBException
      */
     public WXUserInfoVo getUserInfo(String access_token, String openid) throws SZBException;
+
+    public void save(WXToken token, WXUserInfo wxUserInfo) throws SZBException;
 }

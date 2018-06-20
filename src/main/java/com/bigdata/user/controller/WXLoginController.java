@@ -3,6 +3,8 @@ package com.bigdata.user.controller;
 import com.bigdata.apiout.ApiOut;
 import com.bigdata.enums.ResponseCode;
 import com.bigdata.framework.common.utils.StringUtils;
+import com.bigdata.user.model.WXToken;
+import com.bigdata.user.model.WXUserInfo;
 import com.bigdata.user.service.WXService;
 import com.bigdata.user.vo.WXTokenVo;
 import com.bigdata.user.vo.WXUserInfoVo;
@@ -10,10 +12,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yang
@@ -64,7 +63,11 @@ public class WXLoginController {
         return new ApiOut.Builder<WXUserInfoVo>().code(ResponseCode.SUCCESS).data(wxService.getUserInfo(token,openid)).build();
     }
 
-
-
+    @ApiOperation(value = "存储用户信息",notes = "存储用户信息")
+    @PostMapping(path = "/info",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
+    public ApiOut<String> wxUserInfo(WXToken token, WXUserInfo wxUserInfo){
+        wxService.save(token,wxUserInfo);
+        return new ApiOut.Builder<String>().message("储存用户信息成功").code(ResponseCode.SUCCESS).build();
+    }
 
 }

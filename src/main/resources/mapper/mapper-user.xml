@@ -29,7 +29,7 @@
         INSERT INTO
         <include refid="tableName"/>
         (`openid`, `nickname`, `sex`, `province`, `city`, `country`,
-        `headimgurl`, `privilege`,`unionid`, `shipping_fee`)
+        `headimgurl`, `privilege`,`unionid`)
         VALUES
         <foreach item="item" index="index" collection="array" separator=",">
             (#{item.openid}, #{item.nickname},#{item.sex}, #{item.province},
@@ -67,8 +67,8 @@
         UPDATE
         <include refid="tableName"/>
         <set>
-            <if test="updatedTime !=null">
-              "updated_time"=#{updatedTime}
+            <if test="updateTime !=null">
+              `update_time`=#{updateTime}
             </if>
         </set>
         WHERE `id` = #{id}

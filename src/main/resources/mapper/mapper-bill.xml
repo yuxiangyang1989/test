@@ -118,7 +118,7 @@
             <if test="redName!=null">
                 `red_name`=#{redName},
             </if>
-                `updated_time`= now()
+                `update_time`= now()
         </set>
         WHERE `id` = #{id}
     </update>

@@ -117,7 +117,15 @@
         <include refid="tableName"/>
         where `id` = #{id}
     </select>
-
+    <!--根据客户昵称查找流水交易-->
+    <select id="findByRedEnvelopeBak" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        where `openid` = #{openid} and red_name_bak = #{redEnvelopeBak}
+        ORDER BY `create_time` DESC;
+    </select>
 
     <!--修改备注-->
     <update id="update" parameterType="com.bigdata.szb.model.Statement">

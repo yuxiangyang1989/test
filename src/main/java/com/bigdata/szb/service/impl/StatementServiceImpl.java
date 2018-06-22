@@ -92,4 +92,12 @@ public class StatementServiceImpl implements StatementService {
         map.put("product",integerMap);
         return map;
     }
+
+    @Override
+    public List<Statement> findByRedEnvelopeBak(String openid,String redEnvelopeBak) throws SZBException {
+        Statement statement = new Statement();
+        statement.setOpenid(openid);
+        statement.setRedEnvelopeBak(redEnvelopeBak);
+        return statementRepository.findByRedEnvelopeBak(statement);
+    }
 }

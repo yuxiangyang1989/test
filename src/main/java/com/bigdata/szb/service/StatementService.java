@@ -45,7 +45,21 @@ public interface StatementService {
      */
     List<Statement> findBillListFrequency(String openid,Integer page,Integer size,Date stime, Date etime) throws SZBException;
 
+    /**
+     * 收账宝获取用户数据
+     * @param statement
+     * @return
+     * @throws SZBException
+     */
     Statement insert(Statement statement) throws SZBException;
 
+    /**
+     * 近一月收付情况
+     * @param openid
+     * @return
+     * @throws SZBException
+     */
     Map<String, Object> findMonth(String openid) throws SZBException;
+
+    List<Statement> findByRedEnvelopeBak(String openid,String redEnvelopeBak) throws SZBException;
 }

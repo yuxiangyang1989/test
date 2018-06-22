@@ -71,6 +71,13 @@ public class StatementController extends AbstractController {
             return new ApiOut.Builder<List<BillVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
         return new ApiOut.Builder<List<BillVo>>().data(converter.toVos(statementService.findBillListFrequency(vo.getOpenid(),vo.getPage(),vo.getSize(),vo.getStime(),vo.getEtime()),this::toBillVo)).code(ResponseCode.SUCCESS).build();
     }
+    @ApiOperation(value = "排行流水详情",notes = "排行流水详情")
+    @GetMapping(path = "/getBillInfo",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
+    public ApiOut<List<BillVo>> getBillInfo(@RequestHeader String token,String openid,String redEnvelopeBak){
+        if (!validateToken(token,openid))
+            return new ApiOut.Builder<List<BillVo>>().message("token失效").code(ResponseCode.TokenInvalid).build();
+        return new ApiOut.Builder<List<BillVo>>().data(converter.toVos(statementService.findByRedEnvelopeBak(openid,redEnvelopeBak),this::toBillVo)).code(ResponseCode.SUCCESS).build();
+    }
 
     @ApiOperation(value = "流水添加",notes = "流水添加")
     @PostMapping (path = "/bill",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)

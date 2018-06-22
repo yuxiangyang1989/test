@@ -26,7 +26,9 @@ public class BillVo extends BaseVo{
     private String content;//描述
     private Long price;//明细
     private String nikeName;
-    private String redName;
+    private String redEnvelope;
+    private Long frequency;
+    private Date createDate;
     private Date stime;
     private Date etime;
     @NotEmpty
@@ -42,15 +44,18 @@ public class BillVo extends BaseVo{
         this.setType(statement.getType());
         this.setContent(statement.getContent());
         this.setNikeName(statement.getNikeName());
-        this.setRedName(statement.getRedName());
+        this.setRedEnvelope(statement.getRedEnvelopeBak());
         this.setPrice(statement.getAmount());
+        this.setCreateDate(statement.getCreateTime());
+        this.setFrequency(statement.getFrequency());
     }
 
     public Statement toModel(){
         Statement statement = new Statement();
         Optional.ofNullable(this.getSid()).ifPresent(sid->statement.setId(NumberUtils.uncompress(sid)));
         statement.setContent(this.getContent());
-        statement.setRedName(this.getRedName());
+        statement.setRedEnvelope(this.getRedEnvelope());
+        statement.setRedEnvelopeBak(this.getRedEnvelope());
         statement.setAmount(this.getPrice());
         statement.setOpenid(this.getOpenid());
         statement.setType(this.getType());

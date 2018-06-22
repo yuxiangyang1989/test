@@ -10,7 +10,8 @@
         <result property="type" column="type" typeHandler="com.bigdata.szb.handler.EnumStatementHandler"/>
         <result property="openid" column="openid"/>
         <result property="nikeName" column="nike_name"/>
-        <result property="redName" column="red_name"/>
+        <result property="redEnvelope" column="red_name"/>
+        <result property="redEnvelopeBak" column="red_name_bak"/>
         <result property="createTime" column="create_time"/>
         <result property="updateTime" column="update_time"/>
     </resultMap>
@@ -18,18 +19,18 @@
     <sql id="tableName">`statement`</sql>
 
     <sql id="mainColumns">
-        `id`, `content`, `amount`, `type`,`product_type`, `openid`,`nike_name`,`red_name`,`create_time`, `update_time`
+        `id`, `content`, `amount`, `type`,`product_type`, `openid`,`nike_name`,`red_name`,`red_name_bak`,`create_time`, `update_time`
     </sql>
 
     <!-- 创建单个或多个对象 -->
     <insert id="create" keyProperty="id" keyColumn="id" parameterType="com.bigdata.user.model.WXUserInfo">
         INSERT INTO
         <include refid="tableName"/>
-        (`content`, `amount`, `type`, `openid`, `nike_name`,`red_name`,`product_type`)
+        (`content`, `amount`, `type`, `openid`, `nike_name`,`red_name`,`red_name_bak`,`product_type`)
         VALUES
         <foreach item="item" index="index" collection="array" separator=",">
             (#{item.content}, #{item.amount},#{item.type,typeHandler=com.bigdata.szb.handler.EnumStatementHandler}, #{item.openid},
-            #{item.nikeName},#{item.redName},#{item.productType,typeHandler=com.bigdata.szb.handler.EnumProductHandler})
+            #{item.nikeName},#{item.redEnvelope},#{item.redEnvelopeBak},#{item.productType,typeHandler=com.bigdata.szb.handler.EnumProductHandler})
         </foreach>
     </insert>
 
@@ -50,6 +51,9 @@
             <if test="openid!=null">
                 openid = #{openid}
             </if>
+            <if test="redEnvelopeBak!=null">
+                red_name_bak=#{redEnvelopeBak}
+            </if>
             <if test="stime!=null">
                 <![CDATA[and create_time >= #{stime}]]>
             </if>
@@ -57,11 +61,14 @@
                 <![CDATA[and create_time <= #{etime}]]>
             </if>
         </where>
+        ORDER BY `create_time` DESC;
     </select>
     <!--总额排行-->
     <select id="findBillListRank" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
         SELECT
-        <include refid="mainColumns"/>
+            SUM(IF(TYPE=1,amount,-amount)) amount,
+            `red_name_bak`,
+            MAX(create_time) create_time
         FROM
         <include refid="tableName"/>
         <where>
@@ -75,12 +82,16 @@
                 <![CDATA[and create_time <= #{etime}]]>
             </if>
         </where>
-
+        GROUP BY `red_name_bak`
+        ORDER BY amount DESC
     </select>
     <!--频率排行-->
     <select id="findBillListFrequency" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
         SELECT
-        <include refid="mainColumns"/>
+            SUM(IF(TYPE=1,amount,-amount)) amount,
+            `red_name_bak`,
+            COUNT(`red_name_bak`) frequency,
+            MAX(create_time) create_time
         FROM
         <include refid="tableName"/>
         <where>
@@ -94,7 +105,8 @@
                 <![CDATA[and `create_time` <= #{etime}]]>
             </if>
         </where>
-
+        GROUP BY `red_name_bak`
+        ORDER BY frequency DESC
     </select>
 
     <!-- 主键查找 -->
@@ -112,11 +124,8 @@
         UPDATE
         <include refid="tableName"/>
         <set>
-            <if test="nikeName!=null">
-                `nike_name`=#{nikeName},
-            </if>
-            <if test="redName!=null">
-                `red_name`=#{redName},
+            <if test="redEnvelopeBak!=null">
+                `red_name_bak`=#{redEnvelopeBak},
             </if>
                 `update_time`= now()
         </set>

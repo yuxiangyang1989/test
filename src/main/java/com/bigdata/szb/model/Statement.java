@@ -24,7 +24,9 @@ public class Statement extends BaseModel{
     private ProductType productType;
     private String openid;
     private String nikeName;
-    private String redName;
+    private String redEnvelope;
+    private String redEnvelopeBak;
+    private Long frequency;
     private Date stime;
     private Date etime;
 }

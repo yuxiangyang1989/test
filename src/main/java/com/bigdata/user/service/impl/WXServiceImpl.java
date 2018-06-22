@@ -1,10 +1,14 @@
 package com.bigdata.user.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.bigdata.enums.user.VipTypeEnum;
 import com.bigdata.exception.SZBException;
 import com.bigdata.framework.web.util.HostUtils;
 import com.bigdata.framework.web.util.HttpClientUtils;
 import com.bigdata.framework.web.util.URLEncodeUtil;
+import com.bigdata.user.model.VipInfoDao;
+import com.bigdata.user.model.VipLevel;
+import com.bigdata.user.repository.VipLevelRepository;
 import com.bigdata.user.repository.WXTokenRepository;
 import com.bigdata.user.repository.WXUserInfoRepository;
 import com.bigdata.user.service.WXService;
@@ -38,6 +42,8 @@ public class WXServiceImpl implements WXService{
     private WXTokenRepository wxTokenRepository;
     @Autowired
     private WXUserInfoRepository wxUserInfoRepository;
+    @Autowired
+    private VipLevelRepository vipLevelRepository;
 
     @Autowired
     private Environment env;
@@ -115,9 +121,14 @@ public class WXServiceImpl implements WXService{
     @Override
     @Transactional
     public void save(WXToken token, WXUserInfo wxUserInfo) throws SZBException {
-
         wxTokenRepository.create(token);
-
+        VipLevel vipLevel = vipLevelRepository.findByOpenid(wxUserInfo.getOpenid());
+        if(null==vipLevel){
+            vipLevel = new VipLevel();
+            vipLevel.setOpenid(wxUserInfo.getOpenid());
+            vipLevel.setVipType(VipTypeEnum.VIP_TRY);
+            vipLevelRepository.create(vipLevel);
+        }
         WXUserInfo wxUserInfo1 = wxUserInfoRepository.findByOpenid(wxUserInfo.getOpenid());
         if (null ==wxUserInfo1){
             wxUserInfoRepository.create(wxUserInfo);
@@ -125,6 +136,18 @@ public class WXServiceImpl implements WXService{
             wxUserInfo1.setUpdateTime(new Date());
             wxUserInfoRepository.update(wxUserInfo1);
         }
-
+    }
+    @Override
+    public VipInfoDao getVipInfo(String openid){
+        VipInfoDao vipInfoDao = new VipInfoDao();
+        WXUserInfo wxUserInfo1 = wxUserInfoRepository.findByOpenid(openid);
+        if (null == wxUserInfo1)
+            return null;
+        VipLevel vipLevel = vipLevelRepository.findByOpenid(openid);
+        if (null == vipLevel)
+            return null;
+        vipInfoDao.setWxUserInfo(wxUserInfo1);
+        vipInfoDao.setVipLevel(vipLevel);
+        return vipInfoDao;
     }
 }

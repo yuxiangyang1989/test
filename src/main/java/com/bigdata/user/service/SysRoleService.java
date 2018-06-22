@@ -20,5 +20,5 @@ public interface SysRoleService {
      * @param userInfo
      * @return List<SysRole>
      */
-    public List<SysRole> selectRoleByUser(UserInfo userInfo) throws SZBException;
+    List<SysRole> selectRoleByUser(UserInfo userInfo) throws SZBException;
 }

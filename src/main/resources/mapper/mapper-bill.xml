@@ -158,5 +158,44 @@
         WHERE
         openid =#{openid} GROUP BY MONTH(NOW()),product_type
     </select>
+    <!--分析折线图-->
+    <select id="findBillForLine" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
+        SELECT
+        SUM(IF(TYPE=1,amount,-amount)) AS amount,
+        STR_TO_DATE(CONCAT( YEAR(create_time),'/',MONTH(create_time)),'%Y/%m') AS create_time
+        FROM
+        <include refid="tableName"/>
+        <where>
+            <if test="null!=openid">
+                `openid` = #{openid}
+            </if>
+            <if test="stime!=null">
+                <![CDATA[and `create_time` >= #{stime}]]>
+            </if>
+            <if test="etime!=null">
+                <![CDATA[and `create_time` <= #{etime}]]>
+            </if>
+        </where>
+        GROUP BY YEAR(create_time),MONTH(create_time)
+    </select>
 
+    <select id="findBillForChart" parameterType="com.bigdata.szb.model.Statement" resultMap="BaseResult">
+        SELECT
+        SUM(IF(TYPE=1,amount,-amount)) AS amount,
+        product_type
+        FROM
+        <include refid="tableName"/>
+        <where>
+            <if test="null!=openid">
+                `openid` = #{openid}
+            </if>
+            <if test="stime!=null">
+                <![CDATA[and `create_time` >= #{stime}]]>
+            </if>
+            <if test="etime!=null">
+                <![CDATA[and `create_time` <= #{etime}]]>
+            </if>
+        </where>
+        GROUP BY product_type
+    </select>
 </mapper>

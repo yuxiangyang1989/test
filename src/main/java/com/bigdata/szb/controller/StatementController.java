@@ -4,6 +4,7 @@ import com.bigdata.abs.AbstractController;
 import com.bigdata.apiout.ApiOut;
 import com.bigdata.enums.ResponseCode;
 import com.bigdata.framework.common.utils.PaginationEntityConverter;
+import com.bigdata.szb.model.AnalysisDao;
 import com.bigdata.szb.model.Statement;
 import com.bigdata.szb.service.StatementService;
 import com.bigdata.szb.vo.BillVo;
@@ -89,6 +90,15 @@ public class StatementController extends AbstractController {
     public ApiOut<Map<String, Object>> getMoth(@PathVariable String openid, @RequestHeader String token){
         return new ApiOut.Builder<Map<String, Object>>().data(statementService.findMonth(openid)).code(ResponseCode.SUCCESS).build();
     }
+
+    @ApiOperation(value = "分析图",notes = "分析图")
+    @GetMapping(path = "/analysis",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
+    public ApiOut<AnalysisDao> getMoth(String openid,Date sDate,Date eDate ,@RequestHeader String token){
+        if (!validateToken(token,openid))
+            return new ApiOut.Builder<AnalysisDao>().message("token失效").code(ResponseCode.TokenInvalid).build();
+        return new ApiOut.Builder<AnalysisDao>().data(statementService.findAnalysis(openid,sDate,eDate)).code(ResponseCode.SUCCESS).build();
+    }
+
     /*---------------------------------private----------------------------------------------------*/
     private BillVo toBillVo(Statement ad){
         return new BillVo(ad);

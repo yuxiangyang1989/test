@@ -25,4 +25,8 @@ public interface StatementRepository extends IBaseRepository<Statement,Long>{
     List<Statement> findBillGroupByProduct(String openid);
 
     List<Statement> findByRedEnvelopeBak(Statement statement);
+
+    List<Statement> findBillForLine(Statement statement);
+
+    List<Statement> findBillForChart(Statement statement);
 }

@@ -18,7 +18,7 @@ public interface UserInfoService {
      * @return
      * @throws SZBException
      */
-    public UserInfo findByUsername(UserInfo userinfo) throws SZBException;
+    UserInfo findByUsername(UserInfo userinfo) throws SZBException;
 
     /**
      * 注册更新信息
@@ -26,7 +26,7 @@ public interface UserInfoService {
      * @return
      * @throws SZBException
      */
-    public UserInfo saveUser(UserInfo userinfo) throws SZBException;
+    UserInfo saveUser(UserInfo userinfo) throws SZBException;
 
     /**
      * 发送短息
@@ -34,7 +34,7 @@ public interface UserInfoService {
      * @return
      * @throws SZBException
      */
-    public MsgVo sendMsg(String phone) throws SZBException;
+    MsgVo sendMsg(String phone) throws SZBException;
 
     /**
      * 验证是否存在
@@ -42,7 +42,7 @@ public interface UserInfoService {
      * @return
      * @throws SZBException
      */
-    public boolean findById(Long id) throws SZBException;
+    boolean findById(Long id) throws SZBException;
 
-    public UserInfo forgetPassword(UserInfo userinfo) throws SZBException;
+    UserInfo forgetPassword(UserInfo userinfo) throws SZBException;
 }

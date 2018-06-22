@@ -15,5 +15,5 @@ import java.util.List;
  */
 public interface SysPermissionService {
 
-    public List<SysPermission> selectPermByUser(UserInfo userInfo) throws SZBException;
+    List<SysPermission> selectPermByUser(UserInfo userInfo) throws SZBException;
 }

@@ -1,6 +1,7 @@
 package com.bigdata.user.service;
 
 import com.bigdata.exception.SZBException;
+import com.bigdata.user.model.VipInfoDao;
 import com.bigdata.user.model.WXToken;
 import com.bigdata.user.model.WXUserInfo;
 import com.bigdata.user.vo.WXTokenVo;
@@ -19,7 +20,7 @@ public interface WXService {
      * @return
      * @throws SZBException
      */
-    public String getCode() throws SZBException;
+    String getCode() throws SZBException;
 
     /**
      * 获取wxtoken
@@ -27,7 +28,7 @@ public interface WXService {
      * @return
      * @throws SZBException
      */
-    public WXTokenVo getAccessToken(String code) throws SZBException;
+    WXTokenVo getAccessToken(String code) throws SZBException;
 
     /**
      * 刷新token
@@ -35,7 +36,7 @@ public interface WXService {
      * @return
      * @throws SZBException
      */
-    public WXTokenVo refreshToken(String refresh_token) throws SZBException;
+    WXTokenVo refreshToken(String refresh_token) throws SZBException;
 
     /**
      * 拉取用户信息
@@ -44,7 +45,9 @@ public interface WXService {
      * @return
      * @throws SZBException
      */
-    public WXUserInfoVo getUserInfo(String access_token, String openid) throws SZBException;
+    WXUserInfoVo getUserInfo(String access_token, String openid) throws SZBException;
 
-    public void save(WXToken token, WXUserInfo wxUserInfo) throws SZBException;
+    void save(WXToken token, WXUserInfo wxUserInfo) throws SZBException;
+
+    VipInfoDao getVipInfo(String openid) throws SZBException;
 }

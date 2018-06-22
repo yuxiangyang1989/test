@@ -2,7 +2,7 @@ package com.bigdata.qqhb.model;
 
 import com.bigdata.apiout.BaseModel;
 import com.bigdata.enums.qqhb.VipEnum;
-import com.bigdata.enums.qqhb.VipTypeEnum;
+import com.bigdata.enums.user.VipTypeEnum;
 import lombok.Data;
 
 import java.io.Serializable;

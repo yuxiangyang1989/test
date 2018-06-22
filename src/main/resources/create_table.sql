@@ -75,15 +75,26 @@ CREATE TABLE `openvip` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 #账单
 CREATE TABLE `statement` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+    `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `content` varchar(255) DEFAULT NULL COMMENT '备注',
   `amount` bigint(20) NOT NULL COMMENT '金额',
   `product_type` tinyint(3) NOT NULL DEFAULT '1' COMMENT '产品类型',
   `type` tinyint(3) NOT NULL COMMENT '类型:0-支出,1-收入',
   `openid` varchar(64) NOT NULL COMMENT '用户唯一标示',
   `nike_name` varchar(32) NOT NULL COMMENT '用户名昵称',
+  `red_name_bak` varchar(32) NOT NULL COMMENT '发红包者昵称备注',
   `red_name` varchar(32) NOT NULL COMMENT '发红包者昵称',
   `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `price` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#会员等级
+CREATE table `vip_info`(
+	`id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+ `openid` varchar(64) NOT NULL COMMENT '用户唯一标示',
+	`vip_type` tinyint(3) NOT NULL COMMENT '会员等级',
+  `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `update_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

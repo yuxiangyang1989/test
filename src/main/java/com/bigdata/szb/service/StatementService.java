@@ -1,8 +1,10 @@
 package com.bigdata.szb.service;
 
 import com.bigdata.exception.SZBException;
+import com.bigdata.szb.model.AnalysisDao;
 import com.bigdata.szb.model.Statement;
 import com.bigdata.szb.vo.StatementRankVo;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
@@ -62,4 +64,6 @@ public interface StatementService {
     Map<String, Object> findMonth(String openid) throws SZBException;
 
     List<Statement> findByRedEnvelopeBak(String openid,String redEnvelopeBak) throws SZBException;
+
+    AnalysisDao findAnalysis(String openid, Date sDate,Date eDate);
 }

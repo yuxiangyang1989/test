@@ -3,6 +3,7 @@ package com.bigdata.szb.service.impl;
 import com.bigdata.enums.szb.ProductType;
 import com.bigdata.exception.SZBException;
 import com.bigdata.framework.pager.PageInfo;
+import com.bigdata.szb.model.AnalysisDao;
 import com.bigdata.szb.model.Statement;
 import com.bigdata.szb.repository.StatementRepository;
 import com.bigdata.szb.service.StatementService;
@@ -99,5 +100,17 @@ public class StatementServiceImpl implements StatementService {
         statement.setOpenid(openid);
         statement.setRedEnvelopeBak(redEnvelopeBak);
         return statementRepository.findByRedEnvelopeBak(statement);
+    }
+
+    @Override
+    public AnalysisDao findAnalysis(String openid, Date sDate, Date eDate) {
+        Statement statement = new Statement();
+        AnalysisDao dao = new AnalysisDao();
+        statement.setOpenid(openid);
+        statement.setStime(sDate);
+        statement.setEtime(eDate);
+        dao.setLine(statementRepository.findBillForLine(statement));
+        dao.setChart(statementRepository.findBillForChart(statement));
+        return dao;
     }
 }

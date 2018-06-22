@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface AdService {
 
-    public List<Ad> findAll() throws SZBException;
+    List<Ad> findAll() throws SZBException;
 }

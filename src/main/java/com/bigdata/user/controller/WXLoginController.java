@@ -1,8 +1,10 @@
 package com.bigdata.user.controller;
 
+import com.bigdata.abs.AbstractController;
 import com.bigdata.apiout.ApiOut;
 import com.bigdata.enums.ResponseCode;
 import com.bigdata.framework.common.utils.StringUtils;
+import com.bigdata.user.model.VipInfoDao;
 import com.bigdata.user.model.WXToken;
 import com.bigdata.user.model.WXUserInfo;
 import com.bigdata.user.service.WXService;
@@ -24,7 +26,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/wx")
 @Api(value = "微信授权" ,tags = "微信用户模块API" ,description = "用户授权")
-public class WXLoginController {
+public class WXLoginController extends AbstractController{
 
     @Autowired
     private WXService wxService;
@@ -68,6 +70,14 @@ public class WXLoginController {
     public ApiOut<String> wxUserInfo(WXToken token, WXUserInfo wxUserInfo){
         wxService.save(token,wxUserInfo);
         return new ApiOut.Builder<String>().message("储存用户信息成功").code(ResponseCode.SUCCESS).build();
+    }
+
+    @ApiOperation(value = "获取vip信息",notes = "获取vip信息")
+    @GetMapping(path = "/getVipInfo",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
+    public ApiOut<VipInfoDao> getVipInfo(String openid,@RequestHeader String token) {
+        if (!validateToken(token,openid))
+            return new ApiOut.Builder<VipInfoDao>().message("token失效").code(ResponseCode.TokenInvalid).build();
+        return  new ApiOut.Builder<VipInfoDao>().code(ResponseCode.SUCCESS).data(wxService.getVipInfo(openid)).build();
     }
 
 }

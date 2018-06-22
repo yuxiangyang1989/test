@@ -2,7 +2,7 @@ package com.bigdata.qqhb.vo;
 
 import com.bigdata.apiout.BaseVo;
 import com.bigdata.enums.qqhb.VipEnum;
-import com.bigdata.enums.qqhb.VipTypeEnum;
+import com.bigdata.enums.user.VipTypeEnum;
 import com.bigdata.framework.common.utils.NumberUtils;
 import com.bigdata.qqhb.model.Openvip;
 import lombok.Data;
@@ -67,19 +67,19 @@ public class OpenVipVo extends BaseVo{
         Date today = new Date();
         c.setTime(today);
         switch (this.getType()){
-            case PROBATION:
+            case VIP_TRY:
                 c.add(Calendar.DAY_OF_MONTH, 1);
                 openvip.setExpireTime(c.getTime());
                 break;
-            case MONTHLY_CARD:
+            case VIP_MONTH:
                 c.add(Calendar.MONTH, 1);
                 openvip.setExpireTime(c.getTime());
                 break;
-            case QUARTERLY_CARD:
+            case VIP_QUARTERLY:
                 c.add(Calendar.MONTH, 3);
                 openvip.setExpireTime(c.getTime());
                 break;
-            case YEAR_CARD:
+            case VIP_YEAR:
                 c.add(Calendar.YEAR, 1);
                 openvip.setExpireTime(c.getTime());
                 break;

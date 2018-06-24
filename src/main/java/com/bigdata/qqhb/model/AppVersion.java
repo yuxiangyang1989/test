@@ -1,6 +1,7 @@
 package com.bigdata.qqhb.model;
 
 import com.bigdata.apiout.BaseModel;
+import com.bigdata.enums.qqhb.AppUpdateTypeEnum;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -15,10 +16,10 @@ import java.util.Date;
  */
 @Data
 public class AppVersion extends BaseModel {
-    private String appName;
     private String appDesc;
+    private String appName;
     private String fileName;
-    private String isMustUpdate;
+    private AppUpdateTypeEnum isMustUpdate;
     private String kefuChar;
     private String kefuPhone;
     private String updateUrl;

@@ -38,8 +38,8 @@ public class AppVersionController {
     private AppVersionService appVersionService;
 
     @ApiOperation(value = "获取app版本",notes = "获取app版本")
-    @GetMapping(path = "/getVersion",produces= MediaType.APPLICATION_JSON_UTF8_VALUE,headers=API_VER)
-    public ApiOut<AppVersion> checkVersion(String userCode, String versionNum, String versionSerNum){
+    @GetMapping(path = "/getVersion",produces= MediaType.APPLICATION_JSON_UTF8_VALUE)
+    public ApiOut<AppVersion> checkVersion(){
         return new ApiOut.Builder<AppVersion>().data(appVersionService.getAppVersion()).code(ResponseCode.SUCCESS).build();
     }
 

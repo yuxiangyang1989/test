@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bigdata.qqhb.repository.AppVersionRepository">
+    <resultMap id="BaseResult" type="com.bigdata.qqhb.model.AppVersion">
+        <id property="id" column="id"/>
+        <result property="appDesc" column="app_desc"/>
+        <result property="appName" column="app_name"/>
+        <result property="fileName" column="file_name"/>
+        <result property="isMustUpdate" column="is_must_update" typeHandler="com.bigdata.qqhb.handler.EnumUpdateHandler"/>
+        <result property="kefuChar" column="kefu_char"/>
+        <result property="kefuPhone" column="kefu_phone"/>
+        <result property="updateUrl" column="update_url"/>
+        <result property="versionNum" column="version_num"/>
+        <result property="versionSerNum" column="version_ser_num"/>
+        <result property="vsersionDate" column="vsersion_date"/>
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+    </resultMap>
+
+    <sql id="tableName">`app_version`</sql>
+
+    <sql id="mainColumns">
+        `id`, `app_desc`, `app_name`, `file_name`, `is_must_update`,`kefu_char`,`kefu_phone`, `update_url`,
+        `version_num`,`version_ser_num`,`vsersion_date`,`create_time`,`update_time`
+    </sql>
+
+    <!-- 创建单个或多个对象 -->
+    <insert id="create" keyProperty="id" keyColumn="id" parameterType="com.bigdata.user.model.WXUserInfo">
+        INSERT INTO
+        <include refid="tableName"/>
+        ( `app_desc`, `app_name`, `file_name`, `is_must_update`,`kefu_char`,`kefu_phone`, `update_url`,
+        `version_num`,`version_ser_num`,`vsersion_date`)
+        VALUES
+        <foreach item="item" index="index" collection="array" separator=",">
+            (#{item.appDesc}, #{item.appName},#{item.fileName}, #{item.isMustUpdate,typeHandler=com.bigdata.qqhb.handler.EnumUpdateHandler},#{item.kefuChar},
+            #{item.kefuPhone}, #{item.updateUrl},#{item.versionNum}, #{item.versionSerNum},#{item.vsersionDate})
+        </foreach>
+    </insert>
+
+    <select id="findAll"  resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        ORDER BY `create_time` DESC
+    </select>
+
+    <!-- 主键查找 -->
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResult">
+        SELECT
+        <include refid="mainColumns"/>
+        FROM
+        <include refid="tableName"/>
+        where `id` = #{id}
+    </select>
+
+    <update id="update" parameterType="com.bigdata.user.model.WXUserInfo">
+        UPDATE
+        <include refid="tableName"/>
+        <set>
+            <if test="updatedTime !=null">
+              "updated_time"=#{updatedTime}
+            </if>
+        </set>
+        WHERE `id` = #{id}
+    </update>
+
+
+</mapper>
